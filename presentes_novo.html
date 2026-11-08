@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lista de Presentes - Raquel & Eduardo</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+:root{--primary:#2c4a3e;--primary-dark:#1f352c;--bg:#edf2ed;--text:#3b423f;--accent:#8fa38c;--white:#fff;--line:#dce5df}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cormorant Garamond',serif;background:var(--bg);color:var(--text);font-size:1.12rem;line-height:1.55;padding-bottom:0}
+body:has(.mobile-checkout){padding-bottom:76px}
+
+/* Cabeçalho elegante e responsivo */
+header{position:sticky;top:0;z-index:1000;background:rgba(247,249,247,.97);border-bottom:1px solid rgba(44,74,62,.08);box-shadow:0 3px 18px rgba(44,74,62,.07);backdrop-filter:blur(10px)}
+.header-inner{max-width:1180px;margin:auto;min-height:76px;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;min-width:0}
+.logo-mark{width:44px;height:44px;border-radius:50%;border:1px solid var(--accent);background:linear-gradient(145deg,#f8faf8,#dfe8e1);display:grid;place-items:center;color:var(--primary);font-family:'Great Vibes',cursive;font-size:1.35rem;line-height:1;flex:none;box-shadow:0 2px 8px rgba(44,74,62,.08)}
+.logo span{font-family:'Great Vibes',cursive;font-size:1.7rem;color:var(--primary);white-space:nowrap}
+nav ul{display:flex;align-items:center;justify-content:flex-end;gap:18px;list-style:none}
+nav a{text-decoration:none;color:var(--text);font-size:.92rem;letter-spacing:1.1px;text-transform:uppercase;white-space:nowrap;transition:.2s}
+nav a:hover{color:var(--primary)}
+.menu-toggle{display:none;border:1px solid var(--line);background:white;color:var(--primary);width:44px;height:44px;border-radius:12px;font-size:1.35rem;cursor:pointer}
+
+main{max-width:1120px;margin:auto;padding:58px 22px 90px}
+.intro{text-align:center;max-width:780px;margin:0 auto 28px}
+h1{font-family:'Great Vibes',cursive;font-size:4.8rem;line-height:1.05;color:var(--primary);font-weight:normal}
+.divider{width:72px;height:1px;background:var(--accent);margin:14px auto 20px}
+.intro p{font-size:1.28rem;color:#5d645f}
+
+/* Orientação de compra/pagamento no início */
+.checkout-guide{background:rgba(255,255,255,.72);border:1px solid var(--line);border-radius:18px;padding:20px 22px;margin:0 auto 30px;box-shadow:0 6px 24px rgba(44,74,62,.06)}
+.guide-title{text-align:center;color:var(--primary);font-size:1.35rem;font-weight:600;margin-bottom:12px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.step{display:flex;align-items:center;gap:9px;justify-content:center;text-align:left;color:#5c655f;font-size:1rem}
+.step b{width:27px;height:27px;border-radius:50%;background:var(--primary);color:white;display:grid;place-items:center;font-size:.9rem;flex:none}
+.guide-bottom{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.guide-total{font-size:1.15rem;color:var(--primary)}
+.guide-total strong{font-size:1.3rem}
+.guide-btn{border:0;border-radius:999px;padding:11px 20px;background:var(--primary);color:white;font-family:inherit;font-size:1.05rem;letter-spacing:.4px;cursor:pointer}
+.guide-btn:disabled{opacity:.55;cursor:not-allowed}
+
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:28px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card,.cart{background:var(--white);border-radius:16px;box-shadow:0 5px 22px rgba(44,74,62,.075);border-top:3px solid var(--primary)}
+.card{padding:25px 23px;min-height:250px;display:flex;flex-direction:column}
+.icon{
+    font-size:2.35rem;
+    line-height:1;
+    text-align:center;
+    margin-bottom:14px;
+}
+
+.card h2,.cart h2{
+    font-family:'Great Vibes',cursive;
+    color:var(--primary);
+    font-weight:normal;
+}
+
+.card h2{
+    font-size:1.7rem;
+    line-height:1.15;
+    text-align:center;
+}
+
+.card p{
+    color:#6a716d;
+    margin:9px 0 18px;
+    flex:1;
+    font-size:1.1rem;
+    line-height:1.4;
+}
+
+.price{font-size:1.4rem;color:var(--primary);font-weight:600}
+.qty{display:flex;align-items:center;gap:10px;margin-top:12px}
+.qty button{width:38px;height:38px;border:0;border-radius:50%;background:var(--primary);color:white;cursor:pointer;font-size:1.25rem;transition:.15s}
+.qty button:active{transform:scale(.94)}
+.qty span{min-width:30px;text-align:center;font-weight:600}
+
+.cart{padding:23px;position:sticky;top:96px}
+.cart h2{font-size:2.45rem;line-height:1.1;margin-bottom:6px}
+.cart-subtitle{font-size:1rem;color:#717975;margin-bottom:10px}
+.empty{color:#777;padding:11px 0 6px}
+.item{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #e4ebe6;padding:10px 0;font-size:1.03rem}
+.item small{display:block;color:#777}
+.total{display:flex;justify-content:space-between;margin:17px 0;font-size:1.35rem;color:var(--primary);font-weight:600}
+.btn{width:100%;border:0;border-radius:10px;padding:13px 14px;background:var(--primary);color:white;cursor:pointer;font-family:inherit;font-size:1.08rem;letter-spacing:.5px;margin-top:7px}
+.btn:active{transform:scale(.99)}
+.btn.secondary{background:#edf2ed;color:var(--primary)}
+.payment{display:none;margin-top:20px;text-align:center;border-top:1px solid var(--line);padding-top:20px}
+.payment.show{display:block}
+.payment h3{color:var(--primary);font-size:1.45rem;margin-bottom:3px}
+#qrcode{display:flex;justify-content:center;margin:16px 0}
+#qrcode img{border:8px solid white;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+#pix{width:100%;min-height:96px;resize:none;padding:9px;border:1px solid #d0dcd5;border-radius:8px;font-family:monospace;font-size:.68rem;background:#fafbfc;margin-top:7px}
+.note{color:#666;font-size:.96rem}
+.pay-hint{margin-top:12px;padding:11px 12px;border-radius:10px;background:#f2f6f3;color:#59645e;font-size:.96rem}
+.custom-pix{margin-top:15px;padding:13px;border:1px solid var(--line);border-radius:12px;background:#fbfcfb;text-align:left}
+.custom-pix-title{color:var(--primary);font-weight:600;margin-bottom:4px}
+.custom-pix-note{font-size:.88rem;color:#707872;margin-bottom:9px}
+.custom-pix-row{display:flex;gap:8px;align-items:center}
+.custom-pix-row input{flex:1;min-width:0;border:1px solid #ccd8d0;border-radius:9px;padding:11px 12px;font:inherit;color:var(--primary);background:white}
+.custom-pix-row button{border:0;border-radius:9px;padding:11px 13px;background:var(--primary);color:white;font:inherit;cursor:pointer;white-space:nowrap}
+.custom-active{margin-top:7px;color:var(--primary);font-size:.84rem;font-weight:600}
+
+
+/* Barra de fechamento sempre acessível no celular */
+.mobile-checkout{display:none}
+footer{background:var(--primary-dark);color:#d0dcd5;text-align:center;padding:34px 20px}
+
+@media(max-width:900px){
+ body{overflow-x:hidden}
+ .header-inner{min-height:68px;padding:9px 16px}
+ .logo-mark{width:40px;height:40px}.logo span{font-size:1.55rem}
+ .menu-toggle{display:block}
+ nav{display:none;position:absolute;left:12px;right:12px;top:66px;background:rgba(250,252,250,.99);border:1px solid var(--line);border-radius:15px;box-shadow:0 10px 30px rgba(44,74,62,.12);padding:7px}
+ nav.open{display:block}
+ nav ul{display:flex;flex-direction:column;gap:0;align-items:stretch}
+ nav li{border-bottom:1px solid #edf1ee} nav li:last-child{border-bottom:0}
+ nav a{display:block;padding:12px 14px;text-align:center;font-size:.95rem}
+ main{padding:42px 16px 90px}
+ h1{font-size:4rem}
+ .layout{grid-template-columns:1fr}
+ .cart{position:static;order:2}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));order:1}
+ .card{min-width:0}
+ .checkout-guide{padding:18px}
+ .mobile-checkout{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:1100;background:rgba(31,53,44,.98);color:white;padding:9px 12px calc(9px + env(safe-area-inset-bottom));align-items:center;justify-content:space-between;gap:10px;box-shadow:0 -4px 18px rgba(0,0,0,.15)}
+ .mobile-checkout .mobile-total{font-size:.95rem;line-height:1.15}.mobile-checkout strong{display:block;font-size:1.1rem}
+ .mobile-checkout button{border:0;border-radius:999px;background:white;color:var(--primary);padding:10px 15px;font-family:inherit;font-size:1rem;white-space:nowrap;min-height:42px}
+}
+@media(max-width:560px){
+ body{font-size:1.05rem;padding-bottom:0}
+ .logo span{font-size:1.42rem}
+ .logo-mark{width:38px;height:38px;font-size:1.2rem}
+ main{padding:30px 10px 112px}
+ h1{font-size:3.45rem}
+ .intro{margin-bottom:20px}.intro p{font-size:1.15rem;line-height:1.45}
+ .checkout-guide{padding:12px 10px;margin-bottom:18px;border-radius:13px}
+ .guide-title{font-size:1.08rem;margin-bottom:9px}
+ .steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-bottom:10px}
+ .step{flex-direction:column;justify-content:flex-start;gap:4px;text-align:center;font-size:.72rem;line-height:1.15}
+ .step b{width:23px;height:23px;font-size:.76rem}
+ .guide-bottom{gap:8px;justify-content:center}.guide-total{font-size:.88rem}.guide-total strong{font-size:1rem}.guide-btn{padding:8px 13px;max-width:none;font-size:.88rem}
+ .layout{width:100%;min-width:0;gap:20px}
+
+ /* Dois presentes por linha no celular */
+ .grid{width:100%;min-width:0;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .card{width:100%;min-width:0;max-width:100%;padding:16px 10px;min-height:0;border-radius:13px;overflow:hidden}
+ .card h2{
+    font-size:1.48rem;
+    line-height:1.02;
+    text-align:center;
+    overflow-wrap:anywhere;
+    word-break:normal;
+}
+ .card p{min-width:0;font-size:.82rem;line-height:1.28;margin:7px 0 12px;overflow-wrap:anywhere}
+ .icon{
+    font-size:1.9rem;
+    margin-bottom:12px;
+    text-align:center;
+}
+ .price{font-size:1.05rem;white-space:nowrap}
+ .qty{gap:6px;margin-top:9px;justify-content:center}
+ .qty button{width:34px;height:34px;font-size:1.15rem}
+ .qty span{min-width:24px}
+
+ .cart{padding:19px;border-radius:14px}
+ .cart h2{font-size:2.25rem}
+ .item{font-size:1rem}
+ .btn{min-height:46px}
+ #qrcode img{max-width:220px;height:auto}
+ #pix{font-size:.62rem;min-height:110px}
+ footer{padding-bottom:112px}
+
+ /* Barra inferior maior e mais visual */
+ .mobile-checkout{
+   min-height:88px;
+   padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+   gap:12px;
+   background:linear-gradient(135deg,#1f352c,#2c4a3e);
+   box-shadow:0 -6px 24px rgba(31,53,44,.28);
+   border-top:1px solid rgba(255,255,255,.12);
+ }
+ .mobile-checkout .mobile-total{
+   font-size:1rem;
+   line-height:1.15;
+   min-width:0;
+ }
+ .mobile-checkout .mobile-total span{
+   display:block;
+   font-size:.88rem;
+   opacity:.88;
+   margin-bottom:3px;
+ }
+ .mobile-checkout strong{
+   display:block;
+   font-size:1.45rem;
+   line-height:1.05;
+   white-space:nowrap;
+ }
+ .mobile-checkout button{
+   flex:1;
+   max-width:205px;
+   min-height:54px;
+   padding:10px 16px;
+   border-radius:14px;
+   background:#fff;
+   color:var(--primary);
+   font-weight:600;
+   font-size:1.08rem;
+   box-shadow:0 3px 10px rgba(0,0,0,.12);
+ }
+}
+@media(max-width:380px){
+ .logo span{font-size:1.28rem}
+ .logo-mark{width:36px;height:36px}
+ h1{font-size:3.05rem}
+ .guide-bottom{flex-direction:column;align-items:stretch}
+ .guide-btn{max-width:none;width:100%}
+ .card{padding:14px 10px}
+ .card h2{font-size:1.34rem}
+ .card p{font-size:.78rem}
+ .price{font-size:1.05rem}
+ .qty button{width:32px;height:32px}
+ .custom-pix{padding:11px;margin-top:12px}
+ .custom-pix-row{flex-direction:column;align-items:stretch}
+ .custom-pix-row input,.custom-pix-row button{width:100%;min-height:44px}
+ .mobile-checkout{min-height:86px;padding-left:11px;padding-right:11px}
+ .mobile-checkout strong{font-size:1.3rem}
+ .mobile-checkout button{padding-left:11px;padding-right:11px;font-size:.98rem;min-height:52px}
+}
+
+/* ===== CORREÇÃO DEFINITIVA DE OVERFLOW MOBILE ===== */
+@media (max-width: 600px){
+  html, body{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    overflow-x:hidden !important;
+  }
+
+  body{
+    position:relative;
+  }
+
+  main,
+  .layout,
+  .grid,
+  .cart,
+  .checkout-guide,
+  footer{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    box-sizing:border-box;
+  }
+
+  main{
+    overflow-x:hidden;
+  }
+
+  .layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    overflow:visible;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    gap:10px;
+    overflow:visible;
+  }
+
+  .card{
+    width:100%;
+    max-width:100%;
+    min-width:0 !important;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+
+  .card,
+  .card *{
+    box-sizing:border-box;
+    max-width:100%;
+  }
+
+  .card h2,
+  .card p{
+    min-width:0;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+
+  .qty{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    display:flex;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .qty button{
+    flex:0 0 34px;
+  }
+
+  .qty span{
+    flex:0 0 24px;
+  }
+
+  .cart{
+    overflow:hidden;
+  }
+
+  .item{
+    min-width:0;
+  }
+
+  .item > div{
+    min-width:0;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+
+  .total{
+    min-width:0;
+    gap:10px;
+  }
+
+  .total span{
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+
+  .custom-pix{
+    max-width:100%;
+    overflow:hidden;
+  }
+
+  .custom-pix-row{
+    width:100%;
+    max-width:100%;
+    min-width:0;
+  }
+
+  .custom-pix-row input{
+    width:1%;
+    flex:1 1 auto;
+    min-width:0;
+    max-width:100%;
+  }
+
+  .custom-pix-row button{
+    flex:0 1 auto;
+    max-width:100%;
+    white-space:normal;
+  }
+
+  #pix{
+    display:block;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+
+  #qrcode{
+    width:100%;
+    max-width:100%;
+    overflow:hidden;
+  }
+
+  #qrcode img,
+  #qrcode canvas{
+    max-width:100% !important;
+    height:auto !important;
+  }
+
+  .mobile-checkout{
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+}
+
+@media (max-width:380px){
+  .grid{
+    grid-template-columns:minmax(0,1fr);
+  }
+
+  .card{
+    padding:15px 12px;
+  }
+
+  .card h2{
+    font-size:1.45rem;
+  }
+}
+
+
+/* ===== Cabeçalho padronizado com a página inicial ===== */
+.logo-container{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  flex-shrink:0;
+}
+.logo-seal-emoji{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  flex:0 0 38px;
+  font-size:1.75rem;
+  line-height:1;
+}
+.logo-text{
+  font-family:'Great Vibes',cursive;
+  font-size:1.6rem;
+  color:var(--primary);
+  letter-spacing:1px;
+  white-space:nowrap;
+}
+@media(max-width:900px){
+  .logo-container{gap:8px;min-width:0}
+  .logo-seal-emoji{width:38px;height:38px;flex:0 0 38px}
+  .logo-text{font-size:1.5rem}
+}
+@media(max-width:560px){
+  .logo-text{font-size:1.35rem}
+  .logo-seal-emoji{width:35px;height:35px;flex:0 0 35px}
+}
+
+
+/* Menu padronizado */
+@media(max-width:900px){
+  .header-inner{
+    min-height:68px;
+    padding:9px 16px;
+  }
+  nav{
+    display:none;
+    position:absolute;
+    left:12px;
+    right:12px;
+    top:66px;
+  }
+  nav.open{display:block}
+}
+
+
+/* ===== Header exatamente alinhado ao index.html ===== */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:rgba(237,242,237,.95);
+  box-shadow:0 2px 10px rgba(44,74,62,.08);
+  z-index:1000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 40px;
+  backdrop-filter:blur(5px);
+}
+
+.header-inner{
+  width:100%;
+  max-width:none;
+  min-height:auto;
+  margin:0;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.header-inner nav{
+  margin-left:auto;
+}
+
+.header-inner nav ul{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:20px;
+  list-style:none;
+}
+
+.header-inner nav a{
+  text-decoration:none;
+  color:var(--text);
+  font-size:.95rem;
+  font-weight:500;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-family:'Cormorant Garamond',serif;
+  white-space:nowrap;
+}
+
+@media(max-width:900px){
+  header{
+    padding:10px 16px;
+    min-height:64px;
+  }
+
+  .header-inner{
+    min-height:44px;
+    padding:0;
+  }
+
+  .header-inner nav{
+    margin-left:0;
+  }
+}
+
+@media(max-width:560px){
+  header{
+    padding:9px 12px;
+  }
+}
+
+
+/* ===== Ajustes finais do header da lista de presentes ===== */
+header{
+  background:rgba(250,252,250,.97) !important;
+  min-height:76px;
+}
+
+.header-inner{
+  min-height:76px;
+}
+
+/* Reserve espaço para o header fixo */
+main{
+  padding-top:110px;
+}
+
+.header-inner nav ul li a{
+  font-family:'Cormorant Garamond',serif !important;
+  font-size:.95rem !important;
+  font-weight:500 !important;
+  letter-spacing:1px !important;
+  text-transform:uppercase !important;
+  color:var(--text) !important;
+  text-decoration:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  width:auto !important;
+  min-height:0 !important;
+  display:inline !important;
+}
+
+@media(max-width:900px){
+  header{
+    min-height:64px;
+  }
+
+  .header-inner{
+    min-height:44px;
+  }
+
+  main{
+    padding-top:92px;
+  }
+
+  .header-inner nav{
+    top:66px;
+  }
+
+  .header-inner nav ul li a{
+    display:block !important;
+    width:100% !important;
+    padding:12px 10px !important;
+  }
+}
+
+@media(max-width:560px){
+  main{
+    padding-top:88px;
+  }
+}
+
+</style>
+
+<style>
+/* ===== Espaço definitivo abaixo do header fixo ===== */
+main {
+  padding-top: 120px !important;
+}
+
+@media (max-width: 900px) {
+  main {
+    padding-top: 96px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  main {
+    padding-top: 92px !important;
+  }
+}
+</style>
+
+
+<style>
+/* Espaçamento adicional do título no desktop */
+@media (min-width: 901px) {
+  main {
+    padding-top: 155px !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== Nova apresentação visual dos presentes ===== */
+.gift-photo{display:block;width:100%;height:190px;object-fit:cover;border-radius:12px;margin-bottom:14px;cursor:pointer;background:#e7eee8;transition:transform .2s,filter .2s}
+.gift-photo:hover{transform:scale(1.015);filter:brightness(.97)}
+.card{padding:16px;min-height:0}
+.card h2{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600}
+.card p{font-size:1rem;margin:7px 0 12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.gift-modal-overlay{position:fixed;inset:0;background:rgba(16,27,21,.66);z-index:3000;display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(3px)}
+.gift-modal-overlay.show{display:flex}
+.gift-modal{position:relative;width:min(560px,100%);max-height: min(90vh,850px);overflow-y:auto;background:#fff;border-radius:20px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.28);animation:giftModalIn .18s ease-out}
+@keyframes giftModalIn{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+.gift-modal-close{position:absolute;right:13px;top:13px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.94);color:var(--primary);font-size:1.5rem;cursor:pointer;z-index:1;box-shadow:0 2px 8px #0002}
+.gift-modal-photo{width:100%;height:260px;object-fit:cover;border-radius:13px;display:block;background:#e7eee8}
+.gift-modal h2{font-family:'Great Vibes',cursive;color:var(--primary);font-size:2.5rem;font-weight:normal;line-height:1.1;margin:17px 0 8px}
+.gift-modal-description{color:#626b65;font-size:1.12rem;line-height:1.5;margin-bottom:13px}
+.gift-modal-price{font-size:1.55rem;font-weight:600;color:var(--primary)}
+.gift-modal .qty{justify-content:flex-start;margin:12px 0 17px}
+.gift-modal-continue{width:100%;border:0;border-radius:11px;padding:13px 16px;background:var(--primary);color:#fff;font:inherit;font-size:1.08rem;cursor:pointer}
+@media(max-width:560px){.gift-photo{height:132px;margin-bottom:10px}.card{padding:11px 9px}.card h2{font-size:1.18rem}.card p{font-size:.86rem;line-height:1.25}.gift-modal{padding:15px;border-radius:16px}.gift-modal-photo{height:210px}.gift-modal h2{font-size:2.1rem}}
+@media(max-width:380px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gift-photo{height:112px}.card{padding:9px 7px}}
+</style>
+
+
+<style>
+/* Fotos quadradas (proporção 1:1) na lista e no pop-up */
+.gift-photo {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+.gift-modal-photo {
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  max-height: min(75vw, 420px);
+  object-fit: cover;
+}
+</style>
+
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="index.html#home" class="logo-container" aria-label="Raquel e Eduardo - início">
+      <span class="logo-seal-emoji" aria-hidden="true">💍</span>
+      <span class="logo-text">Raquel &amp; Eduardo</span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+
+    <nav id="mainNav">
+      <ul>
+        <li><a href="index.html#home">Início</a></li>
+        <li><a href="index.html#convidados">Convidados</a></li>
+        <li><a href="index.html#historia">Nossa História</a></li>
+        <li><a href="index.html#detalhes">O Grande Dia</a></li>
+        <li><a href="index.html#confirmacao">Confirmação</a></li>
+        <li><a href="presentes.html">Presentes</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="intro">
+    <h1>Lista de Presentes</h1>
+    <div class="divider"></div>
+    <p>A presença de vocês é o nosso maior presente! Se quiserem contribuir com a nossa nova vida juntos, escolham uma ou mais opções abaixo.</p>
+  </div>
+
+  <section class="checkout-guide" aria-label="Como finalizar o presente">
+    <div class="guide-title">Como finalizar seu presente</div>
+    <div class="steps">
+      <div class="step"><b>1</b><span>Escolha uma ou mais cotas</span></div>
+      <div class="step"><b>2</b><span>Confira o valor no seu carrinho</span></div>
+      <div class="step"><b>3</b><span>Gere o pagamento por Pix</span></div>
+    </div>
+    <div class="guide-bottom">
+      <div class="guide-total">Total escolhido: <strong id="guideTotal">R$ 0,00</strong></div>
+      <button class="guide-btn" id="guideBtn" onclick="goToCheckout()" disabled>Escolha um presente</button>
+    </div>
+  </section>
+
+  <div class="layout">
+    <section class="grid" id="gifts"></section>
+
+    <aside class="cart" id="checkout">
+      <h2>Finalizar presente</h2>
+      <p class="cart-subtitle">Confira sua escolha e faça o pagamento com Pix.</p>
+      <div id="items" class="empty">Seu carrinho está vazio.</div>
+      <div class="total"><span>Total das cotas</span><span id="total">R$ 0,00</span></div>
+      <div class="custom-pix">
+        <div class="custom-pix-title">💚 Ou escolha outro valor</div>
+        <div class="custom-pix-note">Digite quanto deseja presentear. Esse valor será usado no Pix.</div>
+        <div class="custom-pix-row">
+          <input id="customAmount" type="number" min="1" step="0.01" inputmode="decimal" placeholder="Ex.: 200,00" aria-label="Valor personalizado do Pix">
+          <button type="button" onclick="useCustomAmount()">Usar este valor</button>
+        </div>
+        <div class="custom-active" id="customActive" hidden></div>
+      </div>
+      <button class="btn" id="payBtn" onclick="pay()">Gerar QR Code Pix</button>
+      <button class="btn secondary" onclick="clearCart()">Limpar carrinho</button>
+      <div class="pay-hint">🔒 Pagamento direto pelo Pix. Depois de gerar, escaneie o QR Code no aplicativo do seu banco ou use o Pix Copia e Cola.</div>
+
+      <div class="payment" id="payment">
+        <h3>Pagamento via Pix</h3>
+        <p class="note">Escaneie o QR Code com o aplicativo do seu banco.</p>
+        <div id="qrcode"></div>
+        <strong id="amount"></strong>
+        <p class="note" style="margin-top:10px">Ou use o Pix Copia e Cola:</p>
+        <textarea id="pix" readonly></textarea>
+        <button class="btn" onclick="copyPix()">Copiar Pix Copia e Cola</button>
+        <p class="note" id="msg" style="margin-top:10px"></p>
+      </div>
+    </aside>
+  </div>
+</main>
+
+
+<div class="gift-modal-overlay" id="giftModalOverlay" onclick="handleGiftModalBackdrop(event)" aria-hidden="true">
+  <section class="gift-modal" role="dialog" aria-modal="true" aria-labelledby="giftModalName">
+    <button class="gift-modal-close" type="button" aria-label="Fechar" onclick="closeGiftModal()">×</button>
+    <img class="gift-modal-photo" id="giftModalPhoto" src="" alt="">
+    <h2 id="giftModalName"></h2>
+    <p class="gift-modal-description" id="giftModalDescription"></p>
+    <div class="gift-modal-price" id="giftModalPrice"></div>
+    <div class="qty">
+      <button type="button" aria-label="Diminuir quantidade" onclick="qty(activeGiftId,-1)">−</button>
+      <span id="giftModalQty">0</span>
+      <button type="button" aria-label="Aumentar quantidade" onclick="qty(activeGiftId,1)">+</button>
+    </div>
+    <button class="gift-modal-continue" type="button" onclick="closeGiftModal()">Continuar comprando</button>
+  </section>
+</div>
+
+<div class="mobile-checkout">
+  <div class="mobile-total"><span id="mobileCount">0 itens</span><strong id="mobileTotal">R$ 0,00</strong></div>
+  <button onclick="goToCheckout()" id="mobileBtn">Escolher valor</button>
+</div>
+
+<footer><p>&copy; 2027 Raquel &amp; Eduardo. Feito com amor.</p></footer>
+
+<script>
+/* ====== MANTENHA AQUI A SUA CHAVE PIX ATUAL ====== */
+const PIX_KEY="+5519981215340";
+const PIX_NAME="RAQUEL E EDUARDO";
+const PIX_CITY="LIMEIRA";
+
+const gifts=[
+
+{id:1,price:1500,name:"Lua de Mel Caribenha",description:"Depois de meses organizando o casamento, chegou a hora de trocar planilhas, compromissos e preocupações por águas cristalinas, praias paradisíacas e drinks com guarda-chuvinha! Ajude Raquel e Eduardo a viver dias de descanso no Caribe. Porque eles merecem um all inclusive e, de preferência, nenhum sinal de internet! 🌴😂",shortDescription:"Patrocine alguns dias de descanso no paraíso!",photo:"1.png"},
+{id:2,price:300,name:"Café da Manhã Luxuoso",description:"Raquel cuida da beleza, Eduardo protege Gotham... mas antes de salvar o mundo, os dois precisam de café! ☕🦇 Patrocine um banquete digno de reis, com pães quentinhos, frutas, sucos e muitas delícias. Afinal, até o Batman precisa tomar café da manhã antes de sair para trabalhar!",shortDescription:"Um café da manhã digno de super-heróis!",photo:"2.png"},
+{id:3,price:250,name:"Salve os Videogames do Eduardo!",description:"ALERTA DE EMERGÊNCIA! 🚨 Eduardo corre sério risco de perder seus preciosos videogames! Raquel já está de olho nos controles, consoles e jogos, pensando em transformar tudo em dinheiro para a casa. Ajude Eduardo nessa missão: salve seu mundo virtual antes que Raquel aperte o botão de vender tudo! 🎮😂",shortDescription:"Ajude Eduardo a salvar seus preciosos videogames!",photo:"3.png"},
+{id:4,price:1500,name:"Lua de Mel Indiana",description:"Depois de tantas reuniões, projetos, códigos e conversas com os amigos da Índia, chegou a hora de conhecer o país de verdade! 🇮🇳 Que tal trocar as praias do Caribe por templos, cores, sabores e uma aventura indiana? Se você acha que Raquel e Eduardo devem trocar o Caribe pela Índia, esta é a sua chance de votar com o bolso! 😂",shortDescription:"Caribe ou Índia? Ajude a decidir o destino da lua de mel!",photo:"4.png"},
+{id:5,price:500,name:"Casamento na Fazenda: Edição Renata!",description:"Raquel sonha com um casamento romântico, Eduardo só quer chegar vivo ao altar, mas Renata tem outros planos! Uma lhama para levar as alianças, um bode como pajem e uma galinha para fiscalizar a festa. 🐓😂 Ajude a cunhada a realizar seu sonho agropecuário. Porque, se depender dela, o casamento vai virar uma verdadeira exposição rural!",shortDescription:"Ajude a cunhada Renata a transformar o casamento em uma exposição rural!",photo:"5.png"},
+{id:6,price:600,name:"O Churrascão dos Noivos",description:"Eduardo não quer apenas casar: ele quer inaugurar a temporada oficial de churrascos! 🥩 Vai ter picanha, linguiça, coração, costela e muita gente reunida. Ajude a abastecer a churrasqueira e o estoque de carvão. Depois de tanto planejamento de casamento, chegou a hora de reunir a galera e deixar Eduardo mostrar seus dotes de churrasqueiro. Raquel cuida do casamento, Eduardo cuida da fome! 😂",shortDescription:"Eduardo no comando da churrasqueira!",photo:"6.png"},
+{id:7,price:400,name:"Renovação do Guarda-Roupa",description:"Raquel e Eduardo querem ir combinandinho ao congresso! Mas temos alguns desafios: Raquel precisa descobrir que existem outras cores além do preto, e Eduardo precisa entender que Batman e Superman não são trajes sociais. 😂 Ajude os dois a renovar o visual: um look especial para ela, uma roupa elegante para ele e muito estilo para o casal!",shortDescription:"Ajude os noivos a finalmente saírem combinandinho!",photo:"7.png"},
+{id:8,price:30,name:"Chocolate para Evitar uma Discussão",description:"Eduardo já descobriu que existem momentos em que não adianta argumentar, explicar ou tentar se defender. O segredo é simples: CHOCOLATE! 🍫😂 Ajude a manter o estoque de emergência abastecido. Afinal, cada bombom pode representar uma discussão a menos e alguns minutos a mais de paz conjugal!",shortDescription:"Um bombom pode salvar o dia. Ou o casamento!",photo:"12.png"},
+{id:9,price:1000,name:"Operação: Salvem os Ouvidos dos Convidados!",description:"Renata acha que arrasa no karaokê e agora está de olho no microfone do casamento! 🎤😂 Ajude Eduardo a contratar um DJ ou cantor profissional antes que ela comece o show. Queremos Renata feliz, os convidados animados e, principalmente, as taças inteiras até o final da festa!",shortDescription:"Ajude a contratar um profissional antes que Renata pegue o microfone!",photo:"8.png"},
+{id:10,price:700,name:"Lar Doce Lar",description:"Uma casa só vira lar quando começa a ganhar a cara dos seus moradores! 🏡 Ajude Raquel e Eduardo a escolher vasos, móveis, utensílios e aqueles pequenos detalhes que deixam tudo mais aconchegante. Cada contribuição é um pedacinho do nosso cantinho!",shortDescription:"Ajude a transformar nossa casa no nosso cantinho especial!",photo:"9.png"},
+{id:11,price:500,name:"Projeto Gatificação: Os Verdadeiros Donos da Casa!",description:"Não podemos esquecer dos dois moradores mais importantes! 🐈🐈 Ajude a transformar a casa em um verdadeiro paraíso felino, com brinquedos, arranhadores, prateleiras e cantinhos especiais. Afinal, Raquel e Eduardo vão pagar as contas, mas quem manda na casa são eles! 😂❤️",shortDescription:"Os humanos pagam as contas. Os gatos são os donos!",photo:"10.png"},
+{id:12,price:50,name:"Garantir o Sushi da Noiva",description:"O amor é construído com carinho, cumplicidade e muitas peças de sushi! 🍣😂 Afinal, casamento é dividir tudo: sonhos, planos, boletos e até o sofá... Mas a última peça de salmão? Essa é uma questão delicada! Ajude a manter a felicidade da noiva em dia.",shortDescription:"Noiva feliz, casamento feliz. E sushi também!",photo:"11.png"},
+{id:13,price:800,name:"Lua de Mel Acabou, Chegaram os Boletos!",description:"A lua de mel acaba, as malas são desfeitas e a vida real aparece: conta de luz, água, internet e outras surpresas! 😂💸 Ajude Raquel e Eduardo a enfrentar o primeiro mês de casados sem precisar vender o sofá ou parcelar o boleto em 12 vezes.",shortDescription:"Porque o amor é lindo, mas os boletos não se pagam sozinhos!",photo:"13.png"},
+{id:14,price:350,name:"A Primeira Compra de Mercado",description:"Chegou a hora de abastecer a despensa e a geladeira! 🛒 Arroz, feijão, café, frutas, petiscos e, claro, ração para os verdadeiros donos da casa. Ajude os recém-casados a fazer a primeira compra sem precisar escolher entre jantar e alimentar os gatos! 🐱❤️",shortDescription:"Ajude a encher a geladeira e a despensa dos noivos!",photo:"14.png"},
+{id:15,price:300,name:"Alguém Precisa Lavar Essa Louça!",description:"O amor é lindo, mas a louça não se lava sozinha! 😂 Ajude Raquel e Eduardo a terceirizar a faxina ou garantir algumas horinhas de ajuda doméstica. Assim, sobra mais tempo para namorar, descansar e discutir sobre quem deixou a cozinha daquele jeito!",shortDescription:"Compre algumas horinhas de paz e uma casa limpinha!",photo:"15.png"},
+{id:16,price:200,name:"Estoque Vitalício de Café dos Programadores",description:"Raquel e Eduardo têm um pequeno problema: são programadores e não funcionam sem café! ☕💻 Ajude a abastecer o estoque de café, cápsulas e outras fontes de energia. Afinal, código não compila sozinho, bugs não se resolvem por milagre e o casamento também precisa de manutenção! 😂❤️",shortDescription:"Abasteça o combustível oficial dos dois programadores!",photo:"16.png"}
+];
+let cart={};
+let customPixAmount=0;
+const money=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+let activeGiftId=null;
+function giftPhoto(g){return g.photo||`https://picsum.photos/seed/wedding-gift-${g.id}/900/650`}
+function renderGifts(){document.getElementById("gifts").innerHTML=gifts.map(g=>`<article class="card"><img class="gift-photo" src="${giftPhoto(g)}" alt="${g.name}" loading="lazy" onclick="openGiftModal(${g.id})"><h2>${g.name}</h2><p>${g.shortDescription}</p><div class="price">${money(g.price)}</div><div class="qty"><button aria-label="Diminuir ${g.name}" onclick="qty(${g.id},-1)">−</button><span id="q${g.id}">0</span><button aria-label="Adicionar ${g.name}" onclick="qty(${g.id},1)">+</button></div></article>`).join("");}
+function openGiftModal(id){
+  const g=gifts.find(item=>item.id===id);if(!g)return;activeGiftId=id;
+  document.getElementById("giftModalPhoto").src=giftPhoto(g);
+  document.getElementById("giftModalPhoto").alt=g.name;
+  document.getElementById("giftModalName").textContent=g.name;
+  document.getElementById("giftModalDescription").textContent=g.description;
+  document.getElementById("giftModalPrice").textContent=money(g.price);
+  document.getElementById("giftModalQty").textContent=cart[id]||0;
+  const overlay=document.getElementById("giftModalOverlay");overlay.classList.add("show");overlay.setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+}
+function closeGiftModal(){const overlay=document.getElementById("giftModalOverlay");overlay.classList.remove("show");overlay.setAttribute("aria-hidden","true");document.body.style.overflow="";activeGiftId=null;}
+function handleGiftModalBackdrop(event){if(event.target===document.getElementById("giftModalOverlay"))closeGiftModal();}
+document.addEventListener("keydown",event=>{if(event.key==="Escape")closeGiftModal();});
+function qty(id,d){cart[id]=Math.max(0,(cart[id]||0)+d);if(!cart[id])delete cart[id];renderCart();}
+function total(){return Object.entries(cart).reduce((s,[id,q])=>s+gifts.find(g=>g.id==id).price*q,0)}
+function itemCount(){return Object.values(cart).reduce((s,q)=>s+q,0)}
+function paymentAmount(){return customPixAmount>0?customPixAmount:total()}
+function useCustomAmount(){
+  const input=document.getElementById("customAmount");
+  const value=Number(String(input.value).replace(",","."));
+  if(!Number.isFinite(value)||value<=0){alert("Digite um valor válido para o Pix.");return}
+  customPixAmount=Math.round(value*100)/100;
+  document.getElementById("customActive").hidden=false;
+  document.getElementById("customActive").textContent="Valor personalizado do Pix: "+money(customPixAmount);
+  renderCart();
+}
+function renderCart(){
+  gifts.forEach(g=>{let e=document.getElementById("q"+g.id);if(e)e.textContent=cart[g.id]||0});
+  const modalQty=document.getElementById("giftModalQty");if(modalQty&&activeGiftId!==null)modalQty.textContent=cart[activeGiftId]||0;
+  let entries=Object.entries(cart),box=document.getElementById("items");
+  box.className=entries.length?"":"empty";
+  box.innerHTML=entries.length?entries.map(([id,q])=>{let g=gifts.find(x=>x.id==id);return `<div class="item"><div>${g.name}<small>${q} × ${money(g.price)}</small></div><strong>${money(g.price*q)}</strong></div>`}).join(""):"Seu carrinho está vazio.";
+  const t=total(),count=itemCount(),payValue=paymentAmount();
+  document.getElementById("total").textContent=money(t);
+  document.getElementById("guideTotal").textContent=money(payValue);
+  document.getElementById("mobileTotal").textContent=money(payValue);
+  document.getElementById("mobileCount").textContent=count===1?"1 item":`${count} itens`;
+  const guideBtn=document.getElementById("guideBtn"),mobileBtn=document.getElementById("mobileBtn");
+  guideBtn.disabled=count===0; guideBtn.textContent=count?"Ir para pagamento":"Escolha um presente";
+  mobileBtn.textContent=count?"Finalizar pagamento":"Escolher valor";
+  document.getElementById("payment").classList.remove("show");
+}
+function goToCheckout(){
+  const checkout=document.getElementById("checkout");
+  checkout.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function crc16(s){let crc=0xFFFF;for(let i=0;i<s.length;i++){crc^=s.charCodeAt(i)<<8;for(let j=0;j<8;j++)crc=(crc&0x8000)?((crc<<1)^0x1021)&0xFFFF:(crc<<1)&0xFFFF}return crc.toString(16).toUpperCase().padStart(4,"0")}
+function f(id,v){return id+String(v.length).padStart(2,"0")+v}
+function pixPayload(value){
+  let name=PIX_NAME.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9 .-]/g,"").toUpperCase().slice(0,25);
+  let city=PIX_CITY.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^A-Za-z0-9 .-]/g,"").toUpperCase().slice(0,15);
+  let mai=f("00","br.gov.bcb.pix")+f("01",PIX_KEY);
+  let payload=f("00","01")+f("01","12")+f("26",mai)+f("52","0000")+f("53","986")+f("54",value.toFixed(2))+f("58","BR")+f("59",name)+f("60",city)+f("62",f("05","***"))+"6304";
+  return payload+crc16(payload);
+}
+function pay(){
+  let value=paymentAmount();
+  if(value<=0){alert("Escolha um presente ou digite um valor para o Pix.");return}
+  if(PIX_KEY==="SUA_CHAVE_PIX_AQUI"){alert("Mantenha a sua chave Pix atual na constante PIX_KEY antes de publicar esta versão.");return}
+  if(typeof QRCode==="undefined"){alert("Não foi possível carregar o gerador de QR Code. Verifique sua conexão com a internet e tente novamente.");return}
+  let payload=pixPayload(value);
+  document.getElementById("qrcode").innerHTML="";
+  new QRCode(document.getElementById("qrcode"),{text:payload,width:230,height:230,correctLevel:QRCode.CorrectLevel.M});
+  document.getElementById("amount").textContent="Valor: "+money(value);
+  document.getElementById("pix").value=payload;
+  document.getElementById("payment").classList.add("show");
+  document.getElementById("payment").scrollIntoView({behavior:"smooth",block:"center"});
+}
+async function copyPix(){let t=document.getElementById("pix").value;try{await navigator.clipboard.writeText(t)}catch{let a=document.getElementById("pix");a.select();document.execCommand("copy")}document.getElementById("msg").textContent="Pix Copia e Cola copiado!";}
+function clearCart(){cart={};customPixAmount=0;document.getElementById("customAmount").value="";document.getElementById("customActive").hidden=true;renderCart();}
+
+const menuToggle=document.getElementById("menuToggle"),mainNav=document.getElementById("mainNav");
+menuToggle.addEventListener("click",()=>{const open=mainNav.classList.toggle("open");menuToggle.setAttribute("aria-expanded",open);menuToggle.textContent=open?"×":"☰"});
+document.querySelectorAll("nav a").forEach(a=>a.addEventListener("click",()=>{mainNav.classList.remove("open");menuToggle.setAttribute("aria-expanded","false");menuToggle.textContent="☰"}));
+renderGifts();renderCart();
+</script>
+</body>
+</html>
